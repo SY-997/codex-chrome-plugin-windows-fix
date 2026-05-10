@@ -1,3 +1,5 @@
+中文说明见 [README.zh-CN.md](README.zh-CN.md).
+
 # Codex Chrome Plugin Windows Fix
 
 Community repair scripts for a Windows-specific Codex Chrome plugin failure mode:
@@ -56,8 +58,3 @@ Use @chrome to open https://www.baidu.com/ and take a screenshot.
 - `browser-client-net.mjs` is generated on the user's machine from their own installed plugin files.
 - This is an unofficial community workaround.
 - Future Codex updates may replace the plugin cache; rerun `apply-fix.ps1` after updates if the issue returns.
-
-## Chinese Docs
-
-中文说明见 [README.zh-CN.md](README.zh-CN.md).
-
