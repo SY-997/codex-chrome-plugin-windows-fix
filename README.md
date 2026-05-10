@@ -10,6 +10,10 @@ Community repair scripts for a Windows-specific Codex Chrome plugin failure mode
 
 This repository does **not** redistribute OpenAI/Codex proprietary plugin files. It only contains documentation and scripts that patch a plugin already installed on the user's own machine.
 
+## Search Keywords
+
+Codex Chrome plugin fix, Codex Google Chrome plugin fix, Codex Google browser plugin fix, Codex `@chrome` fix, Chrome Native Messaging Host fix, Codex browser automation Windows fix, browser-client-net.mjs, Windows named pipe, 谷歌浏览器插件修复, codex谷歌插件修复, codex chrome插件修复, Codex浏览器插件修复, Native Messaging Host修复。
+
 ## What The Fix Does
 
 The script creates a local fallback client:

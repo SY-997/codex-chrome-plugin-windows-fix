@@ -6,6 +6,10 @@ In the observed Windows environment, the Codex Chrome plugin's Native Messaging 
 
 Direct JSON-RPC over the Chrome extension named pipe worked. The failing path was the browser client's privileged native pipe bridge.
 
+## Search Keywords
+
+Codex Chrome plugin fix, Codex Google Chrome plugin fix, Codex `@chrome` fix, Chrome Native Messaging Host fix, Codex browser automation Windows fix, browser-client-net.mjs, Windows named pipe, 谷歌浏览器插件修复, codex谷歌插件修复, codex chrome插件修复。
+
 ## Simplified Recovery Logic
 
 1. Confirm that the Chrome plugin stack is not broken:

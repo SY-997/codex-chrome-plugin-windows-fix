@@ -10,6 +10,10 @@
 
 这个仓库**不再分发 OpenAI/Codex 的专有插件文件**。这里只放文档和修复脚本。脚本会在用户自己机器上已有的插件目录里，现场生成修复文件。
 
+## 关键词
+
+谷歌浏览器插件修复、codex谷歌插件修复、codex chrome插件修复、Codex Chrome 插件修复、Codex 浏览器插件修复、Codex `@chrome` 修复、Chrome Native Messaging Host 修复、Native Messaging Host 修复、browser-client-net.mjs、Windows named pipe、Codex 浏览器自动化修复。
+
 ## 修复做了什么
 
 脚本会在本机已有的 Codex Chrome 插件目录里生成：

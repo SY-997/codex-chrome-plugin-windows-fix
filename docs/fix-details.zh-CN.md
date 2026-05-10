@@ -6,6 +6,10 @@
 
 直接通过 Chrome 扩展暴露的 named pipe 做 JSON-RPC 是可以工作的。容易卡住的是 `browser-client.mjs` 里的 privileged native pipe bridge 路径。
 
+## 关键词
+
+谷歌浏览器插件修复、codex谷歌插件修复、codex chrome插件修复、Codex Chrome 插件修复、Codex 浏览器插件修复、Codex `@chrome` 修复、Chrome Native Messaging Host 修复、Native Messaging Host 修复、browser-client-net.mjs、Windows named pipe。
+
 ## 修复思路简版
 
 1. 先确认 Chrome 插件链路本身没有坏：
