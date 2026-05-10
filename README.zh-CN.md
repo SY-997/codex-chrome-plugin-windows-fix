@@ -56,7 +56,17 @@ scripts/browser-client-net.mjs
 
 ## 快速使用
 
-在 PowerShell 中运行：
+Windows 下建议直接双击运行：
+
+```text
+scripts\apply-fix.cmd
+scripts\verify.cmd
+```
+
+这两个 `.cmd` 包装器会在成功或失败后停住窗口，方便看到输出和错误信息，不会一闪而过。
+请双击 `.cmd` 文件，不要直接双击 `.ps1` 文件。
+
+高级 PowerShell 用法：
 
 ```powershell
 Set-ExecutionPolicy -Scope Process Bypass

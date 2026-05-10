@@ -66,7 +66,16 @@ enabled = true
 
 ## 验证
 
-运行：
+Windows 下双击运行：
+
+```text
+scripts\apply-fix.cmd
+scripts\verify.cmd
+```
+
+`.cmd` 包装器会用 `-ExecutionPolicy Bypass` 调用 PowerShell，并在退出前暂停。请双击 `.cmd` 文件，不要直接双击 `.ps1` 文件。自动化环境可以设置 `CODEX_NO_PAUSE=1` 跳过暂停。
+
+等价的 PowerShell 命令：
 
 ```powershell
 .\scripts\verify.ps1

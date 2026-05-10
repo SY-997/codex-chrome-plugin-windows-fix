@@ -56,7 +56,17 @@ If the plugin has never been installed at all, install or restore the official p
 
 ## Quick Start
 
-Run PowerShell:
+For a double-click friendly flow on Windows, run these files from Explorer:
+
+```text
+scripts\apply-fix.cmd
+scripts\verify.cmd
+```
+
+The `.cmd` wrappers keep the window open after success or failure so the output is readable.
+Double-click the `.cmd` files, not the `.ps1` files.
+
+Advanced PowerShell usage:
 
 ```powershell
 Set-ExecutionPolicy -Scope Process Bypass

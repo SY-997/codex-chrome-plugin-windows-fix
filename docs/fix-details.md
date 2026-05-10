@@ -66,7 +66,16 @@ enabled = true
 
 ## Verification
 
-Run:
+For double-click use on Windows, run:
+
+```text
+scripts\apply-fix.cmd
+scripts\verify.cmd
+```
+
+The `.cmd` wrappers call PowerShell with `-ExecutionPolicy Bypass` and pause before closing. Double-click the `.cmd` files, not the `.ps1` files. For automation, set `CODEX_NO_PAUSE=1`.
+
+PowerShell equivalent:
 
 ```powershell
 .\scripts\verify.ps1
