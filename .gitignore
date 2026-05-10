@@ -1,0 +1,12 @@
+*.zip
+*.7z
+*.tar
+*.tar.gz
+payload/
+dist/
+*.before-codex-chrome-fix-*
+browser-client.mjs
+browser-client-net.mjs
+extension-host.exe
+node_modules/
+
