@@ -6,6 +6,29 @@
 
 直接通过 Chrome 扩展暴露的 named pipe 做 JSON-RPC 是可以工作的。容易卡住的是 `browser-client.mjs` 里的 privileged native pipe bridge 路径。
 
+## 修复思路简版
+
+1. 先确认 Chrome 插件链路本身没有坏：
+   - Native Messaging Host manifest 存在，并指向预期 host
+   - Codex Chrome Extension 已安装并启用
+   - 低层 pipe 能读到当前 Chrome tab 列表
+2. 定位真正问题：扩展可达，但标准 `browser-client.mjs` 在当前 Windows 环境里走 privileged native pipe bridge 时会卡住。
+3. 用低层 named pipe 验证可以直接控制 Chrome：
+   - 创建 Chrome tab
+   - attach CDP debugger
+   - 打开 `https://www.baidu.com/`
+   - 读取页面标题
+   - 调用 `Page.captureScreenshot`
+4. 不修改原始可信文件，而是新增 `scripts/browser-client-net.mjs`，保留原 API，只把底层传输改成 Windows named pipe。
+5. 更新 `skills/chrome/SKILL.md`，让后续 Codex 会话在文件存在时优先使用 `browser-client-net.mjs`。
+
+验证结果：已通过标准 API 流程打开百度并截图，截图文件名为 `chrome-baidu-screenshot.jpg`。
+
+如果以后 Codex 更新或插件缓存重建覆盖了 `chrome\0.1.7` 里的本地补丁，恢复或重新生成这两处文件即可：
+
+- `scripts/browser-client-net.mjs`
+- `skills/chrome/SKILL.md`
+
 ## 本地 patch 策略
 
 这个公开仓库不包含原始 `browser-client.mjs`。
@@ -58,4 +81,3 @@ enabled = true
 ## 许可说明
 
 本仓库里的脚本和文档使用 MIT License。生成的 `browser-client-net.mjs` 是用户本机已安装 Codex 插件的本地派生文件，本仓库不分发它。
-

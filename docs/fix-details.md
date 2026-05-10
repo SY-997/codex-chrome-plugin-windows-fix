@@ -6,6 +6,29 @@ In the observed Windows environment, the Codex Chrome plugin's Native Messaging 
 
 Direct JSON-RPC over the Chrome extension named pipe worked. The failing path was the browser client's privileged native pipe bridge.
 
+## Simplified Recovery Logic
+
+1. Confirm that the Chrome plugin stack is not broken:
+   - the Native Messaging Host manifest exists and points to the expected host
+   - the Codex Chrome Extension is installed and enabled
+   - the low-level pipe can read the current Chrome tab list
+2. Identify the actual failure: the extension is reachable, but the standard `browser-client.mjs` can hang on the privileged native pipe bridge in this Windows environment.
+3. Prove the direct named-pipe path works by using it to:
+   - create a Chrome tab
+   - attach the CDP debugger
+   - navigate to `https://www.baidu.com/`
+   - read the page title
+   - call `Page.captureScreenshot`
+4. Avoid modifying the original trusted file. Create `scripts/browser-client-net.mjs`, keep the original public API, and change only the underlying transport to the Windows named pipe.
+5. Update `skills/chrome/SKILL.md` so future Codex sessions prefer `browser-client-net.mjs` when it exists.
+
+The validation run succeeded through the normal API flow by opening Baidu and capturing `chrome-baidu-screenshot.jpg`.
+
+If a future Codex update or plugin cache rebuild overwrites the local patch under `chrome\0.1.7`, restore or regenerate these two local files:
+
+- `scripts/browser-client-net.mjs`
+- `skills/chrome/SKILL.md`
+
 ## Local Patch Strategy
 
 The public repository does not include the original `browser-client.mjs`.
@@ -58,4 +81,3 @@ Use @chrome to open https://www.baidu.com/ and take a screenshot.
 ## Legal / Licensing Note
 
 This repository's scripts and documentation are provided under the MIT License. The generated `browser-client-net.mjs` remains a local derivative of the user's installed Codex plugin and is not distributed here.
-

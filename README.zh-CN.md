@@ -22,6 +22,24 @@ scripts/browser-client-net.mjs
 
 脚本还会更新本机 Chrome skill 说明，让后续 Codex 会话优先使用 `browser-client-net.mjs`。
 
+## 修复思路简版
+
+1. 先确认 Chrome 插件、扩展、Native Messaging Host 都没坏：
+   - Native Messaging Host manifest 存在且有效。
+   - Codex Chrome Extension 已安装并启用。
+   - 低层 pipe 能读到当前 Chrome tab 列表。
+2. 真正的问题不是扩展不可用，而是标准 `browser-client.mjs` 在当前 Windows 环境里走 privileged native pipe bridge 时会卡住。
+3. 验证低层 named pipe 可以直接控制 Chrome：
+   - 创建 Chrome tab
+   - attach CDP debugger
+   - 打开 `https://www.baidu.com/`
+   - 读取页面标题
+   - 调用 `Page.captureScreenshot`
+4. 最终不改坏原始可信文件，而是新增 `browser-client-net.mjs`。它保留原 API，只把底层传输改成 Windows named pipe。
+5. 然后更新 `SKILL.md`，让后续 Codex 会话优先导入 `browser-client-net.mjs`。
+
+验证结果：已通过标准 API 流程打开百度并截图，截图文件名为 `chrome-baidu-screenshot.jpg`。
+
 ## 适用条件
 
 - Windows
@@ -57,10 +75,9 @@ Set-ExecutionPolicy -Scope Process Bypass
 - 这里不包含 OpenAI 专有插件源码或二进制文件。
 - `browser-client-net.mjs` 会在用户本机根据已安装插件生成。
 - 这是非官方社区 workaround。
-- Codex 更新后可能覆盖插件缓存；如果问题复现，重新运行 `apply-fix.ps1`。
+- Codex 更新后可能覆盖 `chrome\0.1.7` 里的本地补丁；如果问题复现，重新运行 `apply-fix.ps1`，或者恢复 `scripts/browser-client-net.mjs` 和 `skills/chrome/SKILL.md` 这两处文件。
 
 ## 更多文档
 
 - [英文技术说明](docs/fix-details.md)
 - [中文技术说明](docs/fix-details.zh-CN.md)
-

@@ -22,6 +22,24 @@ inside the user's existing Codex Chrome plugin directory. The generated file is 
 
 It also updates the local Chrome skill notes so future Codex sessions prefer `browser-client-net.mjs` when it exists.
 
+## Short Fix Summary
+
+1. First confirm the Chrome plugin stack itself is healthy:
+   - Native Messaging Host manifest is present and valid.
+   - Codex Chrome Extension is installed and enabled.
+   - The low-level pipe can read the current Chrome tab list.
+2. The real issue is not that the extension is unavailable. In this Windows environment, the standard `browser-client.mjs` can hang when it uses the privileged native pipe bridge.
+3. Verify that the low-level named pipe can control Chrome directly:
+   - create a Chrome tab
+   - attach the CDP debugger
+   - open `https://www.baidu.com/`
+   - read the page title
+   - call `Page.captureScreenshot`
+4. Do not overwrite the original trusted client file. Add `browser-client-net.mjs` instead. It keeps the same API and only swaps the transport layer to the Windows named pipe path.
+5. Update `SKILL.md` so future Codex sessions prefer importing `browser-client-net.mjs`.
+
+Validation result: the standard API flow opened Baidu and captured a screenshot named `chrome-baidu-screenshot.jpg`.
+
 ## Requirements
 
 - Windows
@@ -57,4 +75,4 @@ Use @chrome to open https://www.baidu.com/ and take a screenshot.
 - No OpenAI proprietary plugin source or binaries are included here.
 - `browser-client-net.mjs` is generated on the user's machine from their own installed plugin files.
 - This is an unofficial community workaround.
-- Future Codex updates may replace the plugin cache; rerun `apply-fix.ps1` after updates if the issue returns.
+- Future Codex updates may replace the plugin cache under `chrome\0.1.7`; rerun `apply-fix.ps1` or restore `scripts/browser-client-net.mjs` and `skills/chrome/SKILL.md` if the issue returns.
